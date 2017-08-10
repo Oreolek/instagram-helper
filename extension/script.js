@@ -51,39 +51,27 @@ if (window.location.pathname === '/') {
 
 }
 
-
+// The actual function that finds JPGs or MP4s
 function findMedia(box) {
   var _box = box;
   var _parent, _url, _username;
 
   _box.addEventListener('mouseover', function(event) {
 
-    // img class: _2di5p
-    if (event.target.className === '_2di5p') {
-
-      if (event.target.width < 300) {
-        // thumb
-        return;
-      }
-
-      _parent = event.target.parentNode;
-      _url = event.target.src;
-      _url = _url.replace(/[a-zA-Z][0-9]+x[0-9]+\//, '');
-      _username = _parent.parents('article')[0].querySelector('header > div > a').title;
-
-      addBtn(_parent, _url, _username);
+    if (event.target.width < 300) {
+      // thumb
+      return;
     }
 
-    // video parents class: _7thjo
-    // video class: _l6uaz
-    if (event.target.className === '_7thjo') {
-      _parent = event.target.parentNode;
+    _parent = event.target.parentNode;
+    _url = event.target.src;
+    if (!_url.match(/[a-zA-Z][0-9]+x[0-9]+\/)) {
       _url = _parent.querySelector('._l6uaz').src;
-      _url = _url.replace(/[a-zA-Z][0-9]+x[0-9]+\//, '');
-      _username = _parent.parents('article')[0].querySelector('header > div > a').title;
-
-      addBtn(_parent, _url, _username);
     }
+    _url = _url.replace(/[a-zA-Z][0-9]+x[0-9]+\//, '');
+    _username = _parent.parents('article')[0].querySelector('header > div > a').title;
+
+    addBtn(_parent, _url, _username);
   });
 }
 
